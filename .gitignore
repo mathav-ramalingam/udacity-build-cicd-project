@@ -1,0 +1,6 @@
+# AWS credentials
+aws-cred.txt
+
+# Terraform generated files
+setup/terraform/.terraform/
+setup/terraform/.terraform.lock.hcl
