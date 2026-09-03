@@ -57,6 +57,7 @@ jobs:
 
   build-and-deploy:
     runs-on: ubuntu-latest
+
     needs:
       - lint
       - test
@@ -67,6 +68,9 @@ jobs:
       MOVIE_API_URL: http://ae2d40a765f4c40a2afc22cdf200c5fc-1248995609.us-east-1.elb.amazonaws.com
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
