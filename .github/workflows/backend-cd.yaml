@@ -82,13 +82,17 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-        
-      - name: Test ECR access
+
+      - name: Check AWS identity
         run: |
           aws sts get-caller-identity
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} > /dev/null
-          echo "ECR authorization successful"
-      
+
+      - name: Test ECR repository access
+        run: |
+          aws ecr describe-repositories \
+            --repository-names backend \
+            --region ${{ secrets.AWS_REGION }}
+
       - name: Test ECR access
         run: |
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} > /dev/null
