@@ -88,6 +88,10 @@ jobs:
           aws sts get-caller-identity
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} > /dev/null
           echo "ECR authorization successful"
+      
+      - name: Test ECR access
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} > /dev/null
 
       - name: Login to Amazon ECR
         id: login-ecr
