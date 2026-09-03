@@ -67,15 +67,17 @@ jobs:
       MOVIE_API_URL: http://ae2d40a765f4c40a2afc22cdf200c5fc-1248995609.us-east-1.elb.amazonaws.com
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
+            - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Verify AWS identity
+        run: |
+          aws sts get-caller-identity
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} > /dev/null
 
       - name: Login to Amazon ECR
         id: login-ecr
